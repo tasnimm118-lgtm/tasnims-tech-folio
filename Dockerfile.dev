@@ -30,4 +30,4 @@ COPY --from=builder /app/dist ./dist
 EXPOSE 5000
 
 # Start server
-CMD ["serve", "-s", "dist", "-l", "5000"]
+CMD ["serve", "-s", "dist", "-l", "80"]
