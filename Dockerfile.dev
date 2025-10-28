@@ -1,0 +1,33 @@
+# -----------------------------
+# Stage 1: Build the React app
+# -----------------------------
+FROM node:20-alpine AS builder
+
+WORKDIR /app
+
+# Copy only package files for caching
+COPY package*.json ./
+RUN npm ci
+
+# Copy source and build
+COPY . .
+RUN npm run build
+
+# -----------------------------
+# Stage 2: Run minimal Node server
+# -----------------------------
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Install tiny static server
+RUN npm install -g serve
+
+# Copy built files from builder
+COPY --from=builder /app/dist ./dist
+
+# Expose port
+EXPOSE 5000
+
+# Start server
+CMD ["serve", "-s", "dist", "-l", "5000"]
