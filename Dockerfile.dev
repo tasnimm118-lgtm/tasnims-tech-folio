@@ -1,6 +1,6 @@
-# -----------------------------
+# 
 # Stage 1: Build the React app
-# -----------------------------
+# 
 FROM node:20-alpine AS builder
 
 WORKDIR /app
@@ -13,9 +13,9 @@ RUN npm ci
 COPY . .
 RUN npm run build
 
-# -----------------------------
+# 
 # Stage 2: Run minimal Node server
-# -----------------------------
+# 
 FROM node:20-alpine
 
 WORKDIR /app
